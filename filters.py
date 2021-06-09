@@ -40,10 +40,10 @@ class AttributeFilter:
     Concrete subclasses can override the `get` classmethod to provide custom
     behavior to fetch a desired attribute from the given `CloseApproach`.
     """
+
     def __init__(self, op, value):
         """
-        Construct a new `AttributeFilter` from an binary predicate and
-        a reference value.
+        Construct an `AttributeFilter` from binary predicate and ref value.
 
         The reference value will be supplied as the second (right-hand side)
         argument to the operator function. For example, an `AttributeFilter`
@@ -74,52 +74,53 @@ class AttributeFilter:
         raise UnsupportedCriterionError
 
     def __repr__(self):
+        """Representation when printing in the console."""
         return f"{self.__class__.__name__} \
         (op=operator.{self.op.__name__}, value={self.value})"
 
 
 class DateFilter(AttributeFilter):
-    """
-    An AttributeFilter subclass to create Date filter.
-    """
+    """An AttributeFilter subclass to create Date filter."""
+
     @classmethod
     def get(csl, approach):
+        """Return date value."""
         return approach.time.date()
 
 
 class DistanceFilter(AttributeFilter):
-    """
-    An AttributeFilter subclass to create Distance filter.
-    """
+    """An AttributeFilter subclass to create Distance filter."""
+
     @classmethod
     def get(cls, approach):
+        """Return distance value."""
         return approach.distance
 
 
 class VelocityFilter(AttributeFilter):
-    """
-    An AttributeFilter subclass to create Velocity filter.
-    """
+    """An AttributeFilter subclass to create Velocity filter."""
+
     @classmethod
     def get(cls, approach):
+        """Return velocity value."""
         return approach.velocity
 
 
 class DiameterFilter(AttributeFilter):
-    """
-    An AttributeFilter subclass to create Diameter filter.
-    """
+    """An AttributeFilter subclass to create Diameter filter."""
+
     @classmethod
     def get(cls, approach):
+        """Return diameter value."""
         return approach.neo.diameter
 
 
 class HazardousFilter(AttributeFilter):
-    """
-    An AttributeFilter subclass to create Hazardous filter.
-    """
+    """An AttributeFilter subclass to create Hazardous filter."""
+
     @classmethod
     def get(cls, approach):
+        """Return hazardous value."""
         return approach.neo.hazardous
 
 
