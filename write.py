@@ -18,19 +18,27 @@ from helpers import datetime_to_str
 def write_to_csv(results, filename):
     """Write an iterable of `CloseApproach` objects to a CSV file.
 
-    The precise output specification is in `README.md`. Roughly, each output row
-    corresponds to the information in a single close approach from the `results`
-    stream and its associated near-Earth object.
+    The precise output specification is in `README.md`. Roughly, each output
+    row corresponds to the information in a single close approach from the
+    `results` stream and its associated near-Earth object.
 
     :param results: An iterable of `CloseApproach` objects.
-    :param filename: A Path-like object pointing to where the data should be saved.
+    :param filename: A Path-like object pointing to where the data
+                    should be saved.
     """
-    fieldnames = ('datetime_utc', 'distance_au', 'velocity_km_s', 'designation', 'name', 'diameter_km', 'potentially_hazardous')
-    # TODO: Write the results to a CSV file, following the specification in the instructions.
+    fieldnames = (
+                  'datetime_utc',
+                  'distance_au',
+                  'velocity_km_s',
+                  'designation',
+                  'name',
+                  'diameter_km',
+                  'potentially_hazardous'
+                  )
     with open(filename, 'wt') as outfile:
         cout = csv.DictWriter(outfile, fieldnames=fieldnames)
         cout.writeheader()
-        
+
         for approach in results:
             cout.writerow({
                 'datetime_utc': datetime_to_str(approach.time),
@@ -46,15 +54,15 @@ def write_to_csv(results, filename):
 def write_to_json(results, filename):
     """Write an iterable of `CloseApproach` objects to a JSON file.
 
-    The precise output specification is in `README.md`. Roughly, the output is a
-    list containing dictionaries, each mapping `CloseApproach` attributes to
-    their values and the 'neo' key mapping to a dictionary of the associated
-    NEO's attributes.
+    The precise output specification is in `README.md`. Roughly, the output
+    is a list containing dictionaries, each mapping `CloseApproach` attributes
+    to their values and the 'neo' key mapping to a dictionary of the
+    associated NEO's attributes.
 
     :param results: An iterable of `CloseApproach` objects.
-    :param filename: A Path-like object pointing to where the data should be saved.
+    :param filename: A Path-like object pointing to where
+                    the data should be saved.
     """
-    # TODO: Write the results to a JSON file, following the specification in the instructions.
     approaches = []
     for approach in results:
         approaches.append({
@@ -69,4 +77,4 @@ def write_to_json(results, filename):
                     }
             })
     with open(filename, 'wt') as outfile:
-        outfile.write(json.dumps(approaches, indent=2))
+        outfile.write(json.dumps(approaches, sort_keys=True, indent=2))
